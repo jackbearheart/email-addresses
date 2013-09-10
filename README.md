@@ -57,7 +57,8 @@ References
 
 Props
 -----
-Many thanks to Dominic Sayers and his documentation and tests for the is_email function which helped greatly in writing this parser.
+Many thanks to [Dominic Sayers](https://github.com/dominicsayers) and his documentation and tests
+for the [is_email](https://github.com/dominicsayers/isemail) function which helped greatly in writing this parser.
 
 License
 -------
