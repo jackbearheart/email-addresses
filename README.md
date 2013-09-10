@@ -11,6 +11,17 @@ Want to see if something could be an email address? Want to grab the display nam
 
 This library does not validate email addresses - we can't really do that without sending an email. However, it attempts to parse addresses using the (fairly liberal) grammar specified in RFC 5322. You can use this to check if user input looks like an email address.
 
+Why use this?
+-------------
+Use this library because you can be sure it really respects the RFC:
+ - The functions in the recursive decent parser match up with the productions in the RFC
+ - The productions from the RFC are written above each function for easy verification
+ - Tests include all of the test cases from the [is_email](https://github.com/dominicsayers/isemail) project, which are extensive
+
+Installation
+------------
+npm install email-addresses
+
 Example
 -------
 
