@@ -1,0 +1,29 @@
+{
+  "version": "1.1.0",
+  "name": "email-addresses",
+  "description": "An email address parser based on rfc5322",
+  "keywords": [
+    "email address",
+    "parser",
+    "rfc5322",
+    "5322"
+  ],
+  "homepage": "https://github.com/FogCreek/email-addresses",
+  "author": "Jack Bowman <johnrbowman@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FogCreek/email-addresses.git"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "main": "./lib/email-addresses.js",
+  "devDependencies": {
+    "libxmljs": "~0.8.0",
+    "tap": "~0.4.0"
+  },
+  "scripts": {
+    "test": "tap ./test"
+  },
+  "license": "MIT"
+}
