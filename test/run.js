@@ -28,6 +28,14 @@ test("simple one address function", function (t) {
     result = fxn("\"Françoise Lefèvre\"@example.com");
     t.ok(result, "extended ascii is enabled by default");
 
+    result = fxn("First Last <first@last.com>");
+    t.equal(result.name, "First Last",
+        "whitespace is not removed from display names without quotes");
+
+    result = fxn("  First   Last   <first@last.com>");
+    t.equal(result.name, "First Last",
+        "whitespace in names is collapsed");
+
     t.end();
 });
 
