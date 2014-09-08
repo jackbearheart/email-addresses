@@ -77,6 +77,30 @@ $ node
 null
 ```
 
+Usage
+-----
+If you want to simply check whether an address or address list parses, you'll want to call the following functions and check whether the results are null or not: ```parseOneAddress``` for a single address and ```parseAddressList``` for multiple addresses.
+
+If you want to examine the parsed address, for example to extract a name or address, you have some options. The object returned by ```parseOneAddress``` has four helper values on it: ```name```, ```address```, ```local```, and ```domain```. See the example above to understand is actually returned. The ```name``` helper field attempts to helpfully collapse whitespace for the field, since that is what we generally expect from names. The ```address```, ```local```, and ```domain``` parts return the "semantic" values for those fields, i.e. they exclude whitespace and RFC 5322 comments. If you desire, you can also obtain the raw parsed tokens or semantic tokens for those fields. The ```parts``` value is an object referencing nodes in the AST generated. Nodes in the AST have two values of interest here, ```tokens``` and ```semantic```.
+
+```
+> a = addrs.parseOneAddress('Jack  Bowman  <jack@fogcreek.com >')
+> a.parts.name.tokens
+'Jack  Bowman  '
+> a.parts.name.semantic
+'JackBowman'
+> a.name
+'Jack Bowman'
+> a.parts.address.tokens
+'jack@fogcreek.com '
+> a.parts.address.semantic
+'jack@fogcreek.com'
+> a.address
+'jack@fogcreek.com'
+```
+
+If you need to, you can inspect the AST directly. The entire AST is returned when calling the module's function.
+
 References
 ----------
  - http://tools.ietf.org/html/rfc5322
