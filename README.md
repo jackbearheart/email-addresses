@@ -32,16 +32,31 @@ $ node
   parseOneAddress: [Function: parseOneAddressSimple],
   parseAddressList: [Function: parseAddressListSimple] }
 > addrs.parseOneAddress('"Jack Bowman" <jack@fogcreek.com>')
-{ name: '"Jack Bowman"',
+{ parts:
+   { name: [Object],
+     address: [Object],
+     local: [Object],
+     domain: [Object] },
+  name: '"Jack Bowman"',
   address: 'jack@fogcreek.com',
   local: 'jack',
   domain: 'fogcreek.com' }
 > addrs.parseAddressList('jack@fogcreek.com, Bob <bob@example.com>')
-[ { name: null,
+[ { parts:
+     { name: null,
+       address: [Object],
+       local: [Object],
+       domain: [Object] },
+    name: null,
     address: 'jack@fogcreek.com',
     local: 'jack',
     domain: 'fogcreek.com' },
-  { name: 'Bob',
+  { parts:
+     { name: [Object],
+       address: [Object],
+       local: [Object],
+       domain: [Object] },
+    name: 'Bob',
     address: 'bob@example.com',
     local: 'bob',
     domain: 'example.com' } ]
@@ -53,6 +68,7 @@ $ node
      children: [ [Object] ] },
   addresses:
    [ { node: [Object],
+       parts: [Object],
        name: null,
        address: 'jack@fogcreek.com',
        local: 'jack',
