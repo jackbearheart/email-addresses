@@ -46,7 +46,7 @@ test("simple address list function", function (t) {
     result = fxn("\"A B C\" < a@b.c>, d@e") || [{}, {}];
     t.notOk(result[0].node, "has no ast information");
     t.equal(result[0].address, "a@b.c", "full address, semantic only");
-    t.equal(result[0].name, "\"A B C\"", "display name");
+    t.equal(result[0].name, "A B C", "display name");
     t.equal(result[0].local, "a", "local part");
     t.equal(result[0].domain, "b.c", "domain");
 
@@ -76,7 +76,7 @@ test("rfc5322 parser", function (t) {
     result = result.addresses;
     t.ok(result[0].node, "has link to node in ast");
     t.equal(result[0].address, "a@b.c", "full address, semantic only");
-    t.equal(result[0].name, "\"A B C\"", "display name");
+    t.equal(result[0].name, "A B C", "display name");
     t.equal(result[0].local, "a", "local part");
     t.equal(result[0].domain, "b.c", "domain");
 
@@ -97,6 +97,110 @@ test("rfc5322 parser", function (t) {
 
     result = fxn({ input: "\"Françoise Lefèvre\"@example.com", extendedASCII: true });
     t.ok(result, "extended ascii support can be turned on");
+
+    t.end();
+});
+
+test("display-name semantic interpretation", function (t) {
+    var fxn, result;
+    fxn = addrs.parseOneAddress;
+
+    function check(s, comment, expected) {
+        t.equal(fxn(s).name, expected || "First Last", comment);
+    }
+
+    check(
+        "First<foo@bar.com>",
+        "single basic name is ok",
+        "First");
+
+    check(
+        "First Last<foo@bar.com>",
+        "no extra whitespace is ok");
+
+    check(
+        " First Last <foo@bar.com>",
+        "single whitespace at beginning and end is removed");
+
+    check(
+        "First   Last<foo@bar.com>",
+        "whitespace in the middle is collapsed");
+
+    check(
+        "   First    Last     <foo@bar.com>",
+        "extra whitespace everywhere is collapsed");
+
+    check(
+        "   First  Middle   Last     <foo@bar.com>",
+        "extra whitespace everywhere is collapsed, with more than 2 names",
+        "First Middle Last");
+
+    check(
+        "\tFirst \t  Last\t<foo@bar.com>",
+        "extra whitespace everywhere is collapsed with a mix of tabs and spaces");
+
+    check(
+        "\"First Last\"<foo@bar.com>",
+        "surrounding quotes are not semantic");
+
+    check(
+        " \t \"First   Last\" <foo@bar.com>",
+        "surrounding quotes are not semantic and whitespace is collapsed");
+
+    check(
+        " \t \"First \\\"The\t\tNickname\\\"  Last\" <foo@bar.com>",
+        "surrounding quotes are not semantic, but inner quotes are, and whitespace is collapsed",
+        "First \"The Nickname\" Last");
+
+    t.end();
+});
+
+test("address semantic interpretation", function (t) {
+    var fxn, result;
+    fxn = addrs.parseOneAddress;
+
+    function check(s, comment, expected) {
+        t.equal(fxn(s).address, expected || "foo@bar.com", comment);
+    }
+
+    check(
+        "foo@bar.com",
+        "plain address is ok");
+
+    check(
+        "  foo@bar.com  ",
+        "plain address with whitespace at beginning and end");
+
+    check(
+        "foo  @bar.com",
+        "plain address with whitespace left of @ sign");
+
+    check(
+        "foo@  bar.com",
+        "plain address with whitespace right of @ sign");
+
+    // Technically, we should also be able to handle removing CFWS in
+    // a dot-atom (or more importantly, obs-domain), but I don't think anyone cares.
+
+    check(
+        "\t  foo\t\t@ \t  bar.com \t ",
+        "plain address with whitespace everywhere");
+
+    check(
+        "Bob <\t  foo\t\t@ \t  bar.com \t >",
+        "angle-addr with whitespace everywhere");
+
+    check(
+        "\"foo\"@bar.com",
+        "plain address with quoted-string local-part");
+
+    check(
+        "\"foo   baz\"@bar.com",
+        "plain address with quoted-string local-part including spaces" +
+        " (Note: This is a confusing situation for 'semantic' local-parts, and" +
+        " in this case we don't return a valid address. Don't use this. Just" +
+        " take the raw tokens used for the address if you always want it to be equivalent.)",
+        "foo baz@bar.com");
 
     t.end();
 });
