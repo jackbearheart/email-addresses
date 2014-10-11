@@ -221,6 +221,37 @@ test("unicode support", function (t) {
     t.end();
 });
 
+test("rejectTLD option", function (t) {
+    var fxn, result;
+    fxn = addrs.parseOneAddress;
+
+    result = fxn({ input: "foo@bar.com", rejectTLD: false });
+    t.ok(result, "a simple address is ok (rejectTLD false)");
+
+    result = fxn({ input: "foo@bar.com", rejectTLD: true });
+    t.ok(result, "a simple address is ok (rejectTLD true)");
+
+    result = fxn({ input: "\"Foo Bar\" <foo@bar.com>", rejectTLD: false });
+    t.ok(result, "a more complicated address is ok (rejectTLD false)");
+
+    result = fxn({ input: "\"Foo Bar\" <foo@bar.com>", rejectTLD: true });
+    t.ok(result, "a more complicated address is ok (rejectTLD true)");
+
+    result = fxn({ input: "foo@bar", rejectTLD: false });
+    t.ok(result, "an address with a TLD for its domain is allowed by rfc 5322");
+
+    result = fxn({ input: "foo@bar", rejectTLD: true });
+    t.notOk(result, "an address with a TLD for its domain is rejected when the option is set");
+
+    result = fxn({ input: "\"Foo Bar\" <foo@bar>", rejectTLD: false });
+    t.ok(result, "a more complicated address with a TLD for its domain is allowed by rfc 5322");
+
+    result = fxn({ input: "\"Foo Bar\" <foo@bar>", rejectTLD: true });
+    t.notOk(result, "a more complicated address with a TLD for its domain is rejected when the option is set");
+
+    t.end();
+});
+
 function isEmailTest(t, data) {
     var nodes = getNodes(data, "//test");
     nodes.forEach(function (node) {
