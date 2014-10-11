@@ -26,7 +26,7 @@ test("simple one address function", function (t) {
     t.equal(fxn("a@b.c, d@e.f"), null, "address list > null");
 
     result = fxn("\"Françoise Lefèvre\"@example.com");
-    t.ok(result, "extended ascii is enabled by default");
+    t.ok(result, "RFC 6532 (Unicode support) is enabled by default");
 
     result = fxn("First Last <first@last.com>");
     t.equal(result.name, "First Last",
@@ -60,7 +60,7 @@ test("simple address list function", function (t) {
     t.equal(fxn("a@b.c").length, 1, "single address > ok");
 
     result = fxn("\"Françoise Lefèvre\"@example.com");
-    t.ok(result, "extended ascii is enabled by default");
+    t.ok(result, "RFC 6532 (Unicode support) is enabled by default");
 
     t.end();
 });
@@ -95,8 +95,8 @@ test("rfc5322 parser", function (t) {
     result = fxn("\"Françoise Lefèvre\"@example.com");
     t.notOk(result, "extended ascii characters are invalid according to RFC 5322");
 
-    result = fxn({ input: "\"Françoise Lefèvre\"@example.com", extendedASCII: true });
-    t.ok(result, "extended ascii support can be turned on");
+    result = fxn({ input: "\"Françoise Lefèvre\"@example.com", rfc6532: true });
+    t.ok(result, "but extended ascii is allowed starting with RFC 6532");
 
     t.end();
 });
@@ -201,6 +201,22 @@ test("address semantic interpretation", function (t) {
         " in this case we don't return a valid address. Don't use this. Just" +
         " take the raw tokens used for the address if you always want it to be equivalent.)",
         "foo baz@bar.com");
+
+    t.end();
+});
+
+test("unicode support", function (t) {
+    var fxn, result;
+    fxn = addrs.parseOneAddress;
+
+    result = fxn("\"Françoise Lefèvre\"@example.com");
+    t.ok(result, "extended ascii characters are allowed");
+
+    result = fxn("杨孝宇 <xiaoyu@example.com>");
+    t.ok(result, "unicode support includes chinese characters (display-name, no quoted string)");
+
+    result = fxn("\"杨孝宇\" <xiaoyu@example.com>");
+    t.ok(result, "unicode support includes chinese characters (display-name, quoted-string)");
 
     t.end();
 });
