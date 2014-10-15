@@ -1,5 +1,5 @@
 {
-  "version": "1.1.2",
+  "version": "2.0.0",
   "name": "email-addresses",
   "description": "An email address parser based on rfc5322",
   "keywords": [
