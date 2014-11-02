@@ -252,6 +252,31 @@ test("rejectTLD option", function (t) {
     t.end();
 });
 
+test("dots in unquoted display-names", function (t) {
+    var fxn, result;
+    fxn = addrs.parseOneAddress;
+
+    result = fxn("H.P. Lovecraft <foo@bar.net>");
+    t.ok(result, "dots in the middle of an unquoted display-name with spaces (obs-phrase production)");
+
+    result = fxn("Hmm Yes Info. <foo@bar.net>");
+    t.ok(result, "dots to end an unquoted display-name (obs-phrase production)");
+
+    result = fxn("bar.net <foo@bar.net>");
+    t.ok(result, "dots in the middle of an unquoted display-name without spaces (obs-phrase production)");
+
+    result = fxn({ input: "H.P. Lovecraft <foo@bar.net>", strict: true });
+    t.notOk(result, "dots without using 'obsolete' productions");
+
+    result = fxn({ input: "Hmm Yes Info. <foo@bar.net>", strict: true });
+    t.notOk(result, "dots without using 'obsolete' productions");
+
+    result = fxn({ input: "bar.net <foo@bar.net>", strict: true });
+    t.notOk(result, "dots without using 'obsolete' productions");
+
+    t.end();
+});
+
 function isEmailTest(t, data) {
     var nodes = getNodes(data, "//test");
     nodes.forEach(function (node) {
