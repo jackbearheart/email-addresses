@@ -8,11 +8,11 @@
     "rfc5322",
     "5322"
   ],
-  "homepage": "https://github.com/FogCreek/email-addresses",
+  "homepage": "https://github.com/jackbowman/email-addresses",
   "author": "Jack Bowman <johnrbowman@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FogCreek/email-addresses.git"
+    "url": "https://github.com/jackbowman/email-addresses.git"
   },
   "directories": {
     "lib": "./lib"
