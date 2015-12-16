@@ -25,5 +25,8 @@
   "scripts": {
     "test": "tap ./test"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "typescript": {
+    "definition": "./lib/email-addresses.d.ts"
+  }
 }
