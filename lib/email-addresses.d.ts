@@ -1,4 +1,4 @@
 declare module "email-addresses" {
-    function parseOneAddress(opts: any): Object;
-    function parseAddressList(opts: any): Object;
+    export function parseOneAddress(opts: any): any;
+    export function parseAddressList(opts: any): any;
 }
