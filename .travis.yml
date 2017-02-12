@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+    - "4"
+    - "6"
+
+services:
+
+before_script:
+
+script:
+#   - npm run lint
+    - npm test
+
+after_success:
+# to get a nifty codecov.io badge
+#   - npm install istanbul codecov
+#   - npm run cover
+#   - ./node_modules/.bin/codecov
+
+sudo: false
