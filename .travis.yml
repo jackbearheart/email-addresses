@@ -1,20 +1,26 @@
 language: node_js
+
+env:
+    - CXX=g++-4.8
+
 node_js:
     - "4"
     - "6"
 
-services:
+addons:
+    apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-4.8
+
+before_install:
+    - $CXX --version
+    - npm install node-gyp -g
 
 before_script:
 
 script:
-#   - npm run lint
     - npm test
-
-after_success:
-# to get a nifty codecov.io badge
-#   - npm install istanbul codecov
-#   - npm run cover
-#   - ./node_modules/.bin/codecov
 
 sudo: false
