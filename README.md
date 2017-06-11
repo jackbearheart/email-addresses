@@ -94,24 +94,24 @@ Options:
 
 * `string` - An email address to parse. Parses as `address-list`, a list of email addresses separated by commas.
 * `object` with the following keys:
-** `input` - An email address to parse. Required.
-** `rfc6532` - Enable rfc6532 support (unicode in email addresses). Default: `false`.
-** `partial` - Allow a failed parse to return the AST it managed to produce so far. Default: `false`.
-** `simple` - Return just the address or addresses parsed. Default: `false`.
-** `strict` - Turn off features of RFC 5322 marked "Obsolete". Default: `false`.
-** `rejectTLD` - Require at least one `.` in domain names. Default: `false`.
-** `startAt` - Start the parser at one of `address-list`, `from`, `sender`, `reply-to`. Default: `address-list`.
+  * `input` - An email address to parse. Required.
+  * `rfc6532` - Enable rfc6532 support (unicode in email addresses). Default: `false`.
+  * `partial` - Allow a failed parse to return the AST it managed to produce so far. Default: `false`.
+  * `simple` - Return just the address or addresses parsed. Default: `false`.
+  * `strict` - Turn off features of RFC 5322 marked "Obsolete". Default: `false`.
+  * `rejectTLD` - Require at least one `.` in domain names. Default: `false`.
+  * `startAt` - Start the parser at one of `address-list`, `from`, `sender`, `reply-to`. Default: `address-list`.
 
 Returns an object with the following properties:
 
 * `ast` - the full AST of the parse.
 * `addresses` - array of addresses found. Each has the following properties:
-** `parts` - components of the AST that make up the address.
-** `type` - The type of the node, e.g. `mailbox`, `address`, `group`.
-** `name` - The extracted name from the email. e.g. parsing `"Bob" <bob@example.com>` will give `Bob` for the `name`.
-** `address` - The full email address. e.g. parsing the above will give `bob@example.com` for the `address`.
-** `local` - The local part. e.g. parsing the above will give `bob` for `local`.
-** `domain` - The domain part. e.g. parsing the above will give `example.com` for `domain`.
+  * `parts` - components of the AST that make up the address.
+  * `type` - The type of the node, e.g. `mailbox`, `address`, `group`.
+  * `name` - The extracted name from the email. e.g. parsing `"Bob" <bob@example.com>` will give `Bob` for the `name`.
+  * `address` - The full email address. e.g. parsing the above will give `bob@example.com` for the `address`.
+  * `local` - The local part. e.g. parsing the above will give `bob` for `local`.
+  * `domain` - The domain part. e.g. parsing the above will give `example.com` for `domain`.
 
 Note if `simple` is set, the return will be an array of addresses rather than the object above.
 
