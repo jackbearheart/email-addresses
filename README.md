@@ -117,7 +117,8 @@ Note if `simple` is set, the return will be an array of addresses rather than th
 
 Note that addresses can contain a `group` address, which in contrast to the `address` objects
 will simply contain two properties: a `name` and `addresses` which is an array of the addresses in
-the group. You can identify groups because they will have a `type` of `group`.
+the group. You can identify groups because they will have a `type` of `group`. A group looks
+something like this: `Managing Partners:ben@example.com,carol@example.com;`
 
 `obj = addrs.parseOneAddress(opts)`
 ===================================
@@ -158,8 +159,6 @@ Operates similarly to `addrs(opts)`, with the exception that `rfc6532` and `simp
 
 Returns a single address object as described above. If you set `simple: false` the returned object
 includes a `node` object that contains the AST for the address.
-
-Note: as with `parseFrom()` the address can be a `group`.
 
 `obj = addrs.parseReplyTo(opts)`
 ================================
