@@ -308,3 +308,14 @@ test("rfc6854 - sender", function (t) {
     
     t.end();
 });
+
+test("whitespace in domain", function (t) {
+    var fxn, result;
+    fxn = addrs.parseOneAddress;
+
+    result = fxn('":sysmail"@ Some-Group. Some-Org');
+    t.ok(result, "spaces in domain parses ok");
+    t.equal(result.domain, 'Some-Group.Some-Org', "domain parsing strips whitespace");
+    
+    t.end();
+})
