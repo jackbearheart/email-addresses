@@ -305,6 +305,11 @@ test("rfc6854 - sender", function (t) {
     result = fxn("Managing Partners:ben@example.com,carol@example.com;");
     t.ok(result, "Parse group for Sender:");
     t.equal(result.length, undefined, "Result is not an array");
+    t.equal(result.name, "Managing Partners", "Result has name");
+    t.equal(result.local, undefined, "Result has no local part");
+    t.equal(result.addresses.length, 2, "Result has two addresses");
+    t.equal(result.addresses[0].address, "ben@example.com", "Result first address match");
+    t.equal(result.addresses[1].address, "carol@example.com", "Result first address match");
     
     t.end();
 });
