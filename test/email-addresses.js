@@ -20,7 +20,7 @@ test("simple one address function", function (t) {
 
     result = fxn("\"Françoise Lefèvre\"@example.com");
     t.ok(result, "RFC 6532 (Unicode support) is enabled by default");
-    t.equal(result.parts.local.semantic, 'Françoise Lefèvre');
+    t.equal(result.parts.local.semantic, "Françoise Lefèvre");
 
     result = fxn("First Last <first@last.com>");
     t.equal(result.name, "First Last",
@@ -271,13 +271,79 @@ test("dots in unquoted display-names", function (t) {
     t.end();
 });
 
+test("rfc6854 - from", function (t) {
+    var fxn, result;
+    fxn = addrs.parseFrom;
+
+    result = fxn("Managing Partners:ben@example.com,carol@example.com;");
+    t.ok(result, "Parse group for From:");
+    t.equal(result[0].name, "Managing Partners", "Extract group name");
+    t.equal(result[0].addresses.length, 2, "Extract group addresses");
+    t.equal(result[0].addresses[0].address, "ben@example.com", "Group address 1");
+    t.equal(result[0].addresses[1].address, "carol@example.com", "Group address 1")
+
+    result = fxn("Managing Partners:ben@example.com,carol@example.com;, \"Foo\" <foo@example.com>");
+    t.ok(result, "Group and mailbox");
+    t.equal(result[0].name, "Managing Partners", "Extract group name");
+    t.equal(result[1].name, "Foo", "Second address name");
+    t.equal(result[1].local, "foo", "Second address local");
+    t.equal(result[1].domain, "example.com", "Second address domain");
+
+    t.end();
+});
+
+test("rfc6854 - sender", function (t) {
+    var fxn, result;
+    fxn = addrs.parseSender;
+
+    result = fxn("Managing Partners:ben@example.com,carol@example.com;");
+    t.ok(result, "Parse group for Sender:");
+    t.equal(result.length, undefined, "Result is not an array");
+    t.equal(result.name, "Managing Partners", "Result has name");
+    t.equal(result.local, undefined, "Result has no local part");
+    t.equal(result.addresses.length, 2, "Result has two addresses");
+    t.equal(result.addresses[0].address, "ben@example.com", "Result first address match");
+    t.equal(result.addresses[1].address, "carol@example.com", "Result first address match");
+
+    t.end();
+});
+
+test("rfc6854 - reply-to", function (t) {
+    var fxn, result;
+    fxn = addrs.parseReplyTo;
+
+    result = fxn("Managing Partners:ben@example.com,carol@example.com;");
+    t.ok(result, "Parse group for Reply-To:");
+    t.equal(result[0].name, "Managing Partners", "Extract group name");
+    t.equal(result[0].addresses.length, 2, "Extract group addresses");
+    t.equal(result[0].addresses[0].address, "ben@example.com", "Group address 1");
+    t.equal(result[0].addresses[1].address, "carol@example.com", "Group address 1")
+
+    result = fxn("Managing Partners:ben@example.com,carol@example.com;, \"Foo\" <foo@example.com>");
+    t.ok(result, "Group and mailbox");
+    t.equal(result[0].name, "Managing Partners", "Extract group name");
+    t.equal(result[1].name, "Foo", "Second address name");
+    t.equal(result[1].local, "foo", "Second address local");
+    t.equal(result[1].domain, "example.com", "Second address domain");
+
+    result = fxn("Managing Partners:ben@example.com,carol@example.com;, \"Foo\" <foo@example.com>, Group2:alice@example.com;");
+    t.ok(result, "Group, mailbox, group");
+    t.equal(result[0].name, "Managing Partners", "First: group name");
+    t.equal(result[0].addresses[0].address, "ben@example.com");
+    t.equal(result[0].addresses[1].address, "carol@example.com");
+    t.equal(result[1].name, "Foo", "Second: address name");
+    t.equal(result[2].name, "Group2", "Third: group name");
+
+    t.end();
+});
+
 test("whitespace in domain", function (t) {
     var fxn, result;
     fxn = addrs.parseOneAddress;
 
     result = fxn('":sysmail"@ Some-Group. Some-Org');
     t.ok(result, "spaces in domain parses ok");
-    t.equal(result.domain, 'Some-Group.Some-Org', "domain parsing strips whitespace");
-    
+    t.equal(result.domain, "Some-Group.Some-Org", "domain parsing strips whitespace");
+
     t.end();
 })
