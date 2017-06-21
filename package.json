@@ -8,11 +8,11 @@
     "rfc5322",
     "5322"
   ],
-  "homepage": "https://github.com/jackbowman/email-addresses",
-  "author": "Jack Bowman <johnrbowman@gmail.com>",
+  "homepage": "https://github.com/jackbearheart/email-addresses",
+  "author": "Jack Bearheart <johnrbowman@fastmail.fm>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jackbowman/email-addresses.git"
+    "url": "https://github.com/jackbearheart/email-addresses.git"
   },
   "directories": {
     "lib": "./lib"
