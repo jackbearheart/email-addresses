@@ -1,5 +1,14 @@
 
-## 2016-04-30 - 
+## 2017-06-21 - 3.0.0
+
+Note: There is a major version bump because of two things: changes to the typescript definition and changes to the results returned for "group" addresses.
+
+- Full typescript definition (#30, a12b003)
+- Fixed typescript "typings" field in package.json (#32)
+- Proper results for groups (#31). Previously a "group" "address" would show its results as a single address, but it is now returned as a list. See the typescript definition for full return type.
+- Support for parsing RFC6854 originator fields (#31). This adds new functions: parseFrom, parseSender, parseReplyTo. It also adds a new option "startAt". See source for possible values of "startAt".
+
+## 2016-04-30 -
 
 - minified version
 
