@@ -243,6 +243,9 @@ test("rejectTLD option", function (t) {
     result = fxn({ input: "\"Foo Bar\" <foo@bar>", rejectTLD: true });
     t.notOk(result, "a more complicated address with a TLD for its domain is rejected when the option is set");
 
+    result = fxn({ input: "jack@", rejectTLD: true });
+    t.notOk(result, "no domain is ok with rejectTLD set");
+
     t.end();
 });
 
