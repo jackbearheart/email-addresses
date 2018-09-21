@@ -1,4 +1,7 @@
 
+## 2018-09-21 - 3.0.2
+- Fixed npe with rejectTLD option (#33)
+
 ## 2017-06-21 - 3.0.0
 
 Note: There is a major version bump because of two things: changes to the typescript definition and changes to the results returned for "group" addresses.
