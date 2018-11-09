@@ -1,4 +1,7 @@
 
+## 2018-11-09 - 3.0.3
+- No changes
+
 ## 2018-09-21 - 3.0.2
 - Fixed npe with rejectTLD option (#33)
 
