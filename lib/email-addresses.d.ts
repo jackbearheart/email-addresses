@@ -14,7 +14,7 @@ declare module emailAddresses {
             domain: ASTNode;
             comments: ASTNode[];
         };
-        type: string;
+        type: "mailbox";
         name: string;
         address: string;
         local: string;
@@ -26,7 +26,7 @@ declare module emailAddresses {
         parts: {
             name: ASTNode;
         };
-        type: string;
+        type: "group";
         name: string;
         addresses: ParsedMailbox[];
     }
