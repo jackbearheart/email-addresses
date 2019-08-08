@@ -1,9 +1,9 @@
 declare module emailAddresses {
-    function parseOneAddress(input: string | Options): ParsedMailbox | ParsedGroup;
-    function parseAddressList(input: string | Options): (ParsedMailbox | ParsedGroup)[];
-    function parseFrom(input: string | Options): (ParsedMailbox | ParsedGroup)[];
-    function parseSender(input: string | Options): ParsedMailbox | ParsedGroup;
-    function parseReplyTo(input: string | Options): (ParsedMailbox | ParsedGroup)[];
+    function parseOneAddress(input: string | Options): ParsedMailbox | ParsedGroup | null;
+    function parseAddressList(input: string | Options): (ParsedMailbox | ParsedGroup)[] | null;
+    function parseFrom(input: string | Options): (ParsedMailbox | ParsedGroup)[] | null;
+    function parseSender(input: string | Options): ParsedMailbox | ParsedGroup | null;
+    function parseReplyTo(input: string | Options): (ParsedMailbox | ParsedGroup)[] | null;
 
     interface ParsedMailbox {
         node?: ASTNode;
@@ -55,7 +55,7 @@ declare module emailAddresses {
     }
 }
 
-declare function emailAddresses(opts: emailAddresses.Options): emailAddresses.ParsedResult;
+declare function emailAddresses(opts: emailAddresses.Options): emailAddresses.ParsedResult | null;
 
 declare module "email-addresses" {
     export = emailAddresses;
