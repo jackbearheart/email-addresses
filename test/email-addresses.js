@@ -36,7 +36,7 @@ test("simple one address function", function (t) {
 test("address with @ in the name", function (t) {
     var fxn, result;
     fxn = addrs.parseOneAddress;
-    result = fxn("ABC@abc (comment) < a@b.c>") || {};
+    result = fxn({input: "ABC@abc (comment) < a@b.c>", atInDisplayName: true }) || {};
     t.equal(result.name, "ABC@abc", "display name");
     t.end();
 });
@@ -44,7 +44,7 @@ test("address with @ in the name", function (t) {
 test("address with comments", function (t) {
     var fxn, result;
     fxn = addrs.parseOneAddress;
-    result = fxn("ABC (comment) < a@b.c>") || {};
+    result = fxn("ABC (comment) < a@b.c>" ) || {};
     t.equal(result.name, "ABC", "display name");
     t.equal(result.comments, '(comment)');
     t.end();
