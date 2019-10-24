@@ -1,4 +1,8 @@
 
+## 2019-10-24 - 3.1.0
+- Added "atInDisplayName" option (#46)
+- Added "comments" field to result mailbox (#46)
+
 ## 2018-11-09 - 3.0.3
 - No changes
 

@@ -3,7 +3,7 @@ email-addresses.js
 
 An RFC 5322 email address parser.
 
-v 3.0.3
+v 3.1.0
 
 What?
 -----
