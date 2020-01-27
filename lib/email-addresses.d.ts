@@ -1,12 +1,53 @@
 declare module emailAddresses {
-    function parseOneAddress(input: string | Options): ParsedMailbox | ParsedGroup;
-    function parseAddressList(input: string | Options): (ParsedMailbox | ParsedGroup)[];
-    function parseFrom(input: string | Options): (ParsedMailbox | ParsedGroup)[];
-    function parseSender(input: string | Options): ParsedMailbox | ParsedGroup;
-    function parseReplyTo(input: string | Options): (ParsedMailbox | ParsedGroup)[];
+    interface DefaultParseOneOptions {
+        oneResult: true;
+        rfc6532: true;
+        simple: true;
+        startAt: 'address-list';
+    }
+
+    interface DefaultParseListOptions {
+        rfc6532: true;
+        simple: true;
+        startAt: 'address-list';
+    }
+
+    interface DefaultParseFromOptions {
+        rfc6532: true;
+        simple: true;
+        startAt: 'from';
+    }
+
+    interface DefaultParseSenderOptions {
+        oneResult: true,
+        rfc6532: true,
+        simple: true,
+        startAt: 'sender',
+    }
+
+    interface DefaultParseReplyToOptions {
+        rfc6532: true,
+        simple: true,
+        startAt: 'reply-to',
+    }
+
+    function parseOneAddress(input: string): ParsedResult<DefaultParseOneOptions>;
+    function parseOneAddress<O extends Options>(opts: O): ParsedResult<Override<DefaultParseOneOptions, O>>;
+
+    function parseAddressList(input: string): ParsedResult<DefaultParseListOptions>;
+    function parseAddressList<O extends Options>(opts: O): ParsedResult<Override<DefaultParseListOptions, O>>;
+
+    function parseFrom(input: string): ParsedResult<DefaultParseFromOptions>;
+    function parseFrom<O extends Options>(opts: O): ParsedResult<Override<DefaultParseFromOptions, O>>;
+
+    function parseSender(input: string): ParsedResult<DefaultParseSenderOptions>;
+    function parseSender<O extends Options>(opts: O): ParsedResult<Override<DefaultParseSenderOptions, O>>;
+
+    function parseReplyTo(input: string): ParsedResult<DefaultParseReplyToOptions>;
+    function parseReplyTo<O extends Options>(opts: O): ParsedResult<Override<DefaultParseReplyToOptions, O>>;
 
     interface ParsedMailbox {
-        node?: ASTNode;
+        node: ASTNode;
         parts: {
             name: ASTNode;
             address: ASTNode;
@@ -14,7 +55,7 @@ declare module emailAddresses {
             domain: ASTNode;
             comments: ASTNode[];
         };
-        type: string;
+        type: 'mailbox';
         name: string;
         address: string;
         local: string;
@@ -22,11 +63,11 @@ declare module emailAddresses {
     }
 
     interface ParsedGroup {
-        node?: ASTNode;
+        node: ASTNode;
         parts: {
             name: ASTNode;
         };
-        type: string;
+        type: 'group';
         name: string;
         addresses: ParsedMailbox[];
     }
@@ -49,13 +90,56 @@ declare module emailAddresses {
         strict?: boolean;
     }
 
-    interface ParsedResult {
-        ast: ASTNode;
-        addresses: (ParsedMailbox | ParsedGroup)[];
-    }
+    type Override<Default, Actual> = Omit<Default, keyof Actual> & Actual;
+    type HasTrueValue<Options, Key> = Key extends keyof Options ? Options[Key] extends true ? true : false : false;
+    type IsSimple<Options> = HasTrueValue<Options, 'simple'>;
+    type IsOneResult<Options> = HasTrueValue<Options, 'oneResult'>;
+
+    type Address<Options> = IsSimple<Options> extends true ? Omit<ParsedMailbox, 'node'> | Omit<ParsedGroup, 'node'> : ParsedMailbox | ParsedGroup;
+
+    /*
+        simple: false, oneResult: false
+        {
+            ast: ASTNode;
+            addresses: {
+                node: ASTNode;
+                name: string;
+                ...
+            }[];
+        }
+
+        simple: true, oneResult: false
+        {
+            name: string;
+            ...
+        }[]
+
+        simple: false, oneResult: true
+        {
+            node: ASTNode;
+            name: string;
+            ...
+        }
+
+        simple: true, oneResult: true
+        {
+            name: string;
+            ...
+        }
+    */
+
+    type ParsedResult<Options> = IsOneResult<Options> extends true
+      ? Address<Options>
+      : IsSimple<Options> extends true
+        ? Address<Options>[]
+        : {
+            ast: ASTNode;
+            addresses: Address<Options>[];
+        };
+
 }
 
-declare function emailAddresses(opts: emailAddresses.Options): emailAddresses.ParsedResult;
+declare function emailAddresses<O extends emailAddresses.Options>(opts: O): emailAddresses.ParsedResult<O> | null;
 
 declare module "email-addresses" {
     export = emailAddresses;
