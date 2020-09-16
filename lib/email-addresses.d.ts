@@ -55,7 +55,7 @@ declare module emailAddresses {
     }
 }
 
-declare function emailAddresses(opts: emailAddresses.Options): emailAddresses.ParsedResult;
+declare function emailAddresses(opts: emailAddresses.Options): emailAddresses.ParsedResult | null;
 
 declare module "email-addresses" {
     export = emailAddresses;
