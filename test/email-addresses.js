@@ -41,6 +41,17 @@ test("address with @ in the name", function (t) {
     t.end();
 });
 
+test("address with comma in the name", function (t) {
+    var fxn, result;
+    fxn = addrs.parseOneAddress;
+    result = fxn({input: "ABC, abc (comment) < a@b.c>", atInDisplayName: true }) || {};
+    t.equal(result.name, "ABC, abc", "display name");
+
+    result = fxn({input: "ABC, abc (comment) < a@b.c>", atInDisplayName: false }) || {};
+    t.equal(result.name, "ABC, abc", "display name");
+    t.end();
+});
+
 test("address with comments", function (t) {
     var fxn, result;
     fxn = addrs.parseOneAddress;
