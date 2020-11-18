@@ -138,7 +138,7 @@ Parse a list of email addresses separated by comma.
 Operates similarly to `addrs(opts)`, with the exception that `rfc6532` and `simple` default to `true`.
 
 Returns a list of address objects as described above. If you set `simple: false` each address will
-include a `node` object that containst the AST for the address.
+include a `node` object that contains the AST for the address.
 
 `obj = addrs.parseFrom(opts)`
 =============================
@@ -148,7 +148,7 @@ Parse an email header "From:" address (specified as mailbox-list or address-list
 Operates similarly to `addrs(opts)`, with the exception that `rfc6532` and `simple` default to `true`.
 
 Returns a list of address objects as described above. If you set `simple: false` each address will
-include a `node` object that containst the AST for the address.
+include a `node` object that contains the AST for the address.
 
 `obj = addrs.parseSender(opts)`
 ===============================
