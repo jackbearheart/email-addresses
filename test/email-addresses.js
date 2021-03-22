@@ -87,6 +87,26 @@ test("simple address list function", function (t) {
     t.end();
 });
 
+test("simple address list function with user-specified list separator", function (t) {
+    var fxn, result;
+    fxn = addrs.parseAddressList;
+
+    result = fxn({ input: "\"A B C\" < a@b.c>; d@e", addressListSeparator: ";" }) || [{}, {}];
+    t.notOk(result[0].node, "has no ast information");
+    t.equal(result[0].address, "a@b.c", "full address, semantic only");
+    t.equal(result[0].name, "A B C", "display name");
+    t.equal(result[0].local, "a", "local part");
+    t.equal(result[0].domain, "b.c", "domain");
+
+    t.notOk(result[1].node, "has no ast information");
+    t.equal(result[1].address, "d@e", "second address");
+    t.equal(result[1].name, null, "second display name");
+    t.equal(result[1].local, "d", "second local part");
+    t.equal(result[1].domain, "e", "second domain");
+
+    t.end();
+});
+
 test("rfc5322 parser", function (t) {
     var fxn, result;
     fxn = addrs;
