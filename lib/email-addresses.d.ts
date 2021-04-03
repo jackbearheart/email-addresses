@@ -8,14 +8,14 @@ declare module emailAddresses {
     interface ParsedMailbox {
         node?: ASTNode;
         parts: {
-            name: ASTNode;
+            name: ASTNode | null;
             address: ASTNode;
             local: ASTNode;
             domain: ASTNode;
             comments: ASTNode[];
         };
         type: "mailbox";
-        name: string;
+        name: string | null;
         address: string;
         local: string;
         domain: string;
