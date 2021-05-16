@@ -47,6 +47,9 @@ declare module emailAddresses {
         simple?: boolean;
         startAt?: string;
         strict?: boolean;
+        atInDisplayName?: boolean;
+        commaInDisplayName?: boolean;
+        addressListSeparator?: string;
     }
 
     interface ParsedResult {
