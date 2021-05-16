@@ -100,7 +100,7 @@ Options:
   * `simple` - Return just the address or addresses parsed. Default: `false`.
   * `strict` - Turn off features of RFC 5322 marked "Obsolete". Default: `false`.
   * `rejectTLD` - Require at least one `.` in domain names. Default: `false`.
-  * `startAt` - Start the parser at one of `address-list`, `from`, `sender`, `reply-to`. Default: `address-list`.
+  * `startAt` - Start the parser at one of `address`, `address-list`, `angle-addr`, `from`, `group`, `mailbox`, `mailbox-list`, `reply-to`, `sender`. Default: `address-list`.
   * `atInDisplayName` - Allow the `@` character in the display name of the email address. Default: `false`.
   * `commaInDisplayName` - Allow the `,` character in the display name of the email address. Default: `false`.
   * `addressListSeparator` - Specifies the character separating the list of email addresses. Default: `,`.
