@@ -38,6 +38,17 @@ declare module emailAddresses {
         children: ASTNode[];
     }
 
+    type StartProductions =
+        "address"
+        | "address-list"
+        | "angle-addr"
+        | "from"
+        | "group"
+        | "mailbox"
+        | "mailbox-list"
+        | "reply-to"
+        | "sender";
+
     interface Options {
         input: string;
         oneResult?: boolean;
@@ -45,8 +56,11 @@ declare module emailAddresses {
         rejectTLD?: boolean;
         rfc6532?: boolean;
         simple?: boolean;
-        startAt?: string;
+        startAt?: StartProductions;
         strict?: boolean;
+        atInDisplayName?: boolean;
+        commaInDisplayName?: boolean;
+        addressListSeparator?: string;
     }
 
     interface ParsedResult {
