@@ -1,4 +1,11 @@
 
+## 2021-08-17 - 5.0.0
+
+Note: Again there is a major version bump because of changes to the typescript definitions. If you are not a typescript user, this is more like a minor version bump.
+
+- Added "addressListSeperator" option (#57)
+- Typescript: improvements to the type definitions (#58, #59)
+
 ## 2021-01-11 - 4.0.0
 
 Note: Again there is a major version bump because of changes to the typescript definitions. Some of the typescript changes are really bug fixes, noting where null is a possible value. If you are not a typescript user, this is more like a minor version bump.
