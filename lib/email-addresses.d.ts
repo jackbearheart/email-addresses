@@ -29,6 +29,7 @@ declare module emailAddresses {
         type: "group";
         name: string;
         addresses: ParsedMailbox[];
+        domain: string;
     }
 
     interface ASTNode {
