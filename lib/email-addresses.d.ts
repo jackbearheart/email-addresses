@@ -60,7 +60,7 @@ declare module emailAddresses {
         strict?: boolean;
         atInDisplayName?: boolean;
         commaInDisplayName?: boolean;
-        addressListSeparator?: string;
+        addressListSeparator?: string | string[];
     }
 
     interface ParsedResult {
