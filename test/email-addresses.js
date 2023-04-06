@@ -107,6 +107,38 @@ test("simple address list function with user-specified list separator", function
     t.end();
 });
 
+test("simple address list function with user-specified list separator array", function (t) {
+    var fxn, result;
+    fxn = addrs.parseAddressList;
+
+    result = fxn({ input: "\"A B,; C\" < a@b.c>; d@e, x@y\n b@c", addressListSeparator: [";", ",", "\n"] }) || [{}, {}];
+    t.notOk(result[0].node, "has no ast information");
+    t.equal(result[0].address, "a@b.c", "full address, semantic only");
+    t.equal(result[0].name, "A B,; C", "display name");
+    t.equal(result[0].local, "a", "local part");
+    t.equal(result[0].domain, "b.c", "domain");
+
+    t.notOk(result[1].node, "has no ast information");
+    t.equal(result[1].address, "d@e", "second address");
+    t.equal(result[1].name, null, "second display name");
+    t.equal(result[1].local, "d", "second local part");
+    t.equal(result[1].domain, "e", "second domain");
+
+    t.notOk(result[2].node, "has no ast information");
+    t.equal(result[2].address, "x@y", "third address");
+    t.equal(result[2].name, null, "third display name");
+    t.equal(result[2].local, "x", "third local part");
+    t.equal(result[2].domain, "y", "third domain");
+
+    t.notOk(result[3].node, "has no ast information");
+    t.equal(result[3].address, "b@c", "fourth address");
+    t.equal(result[3].name, null, "fourth display name");
+    t.equal(result[3].local, "b", "fourth local part");
+    t.equal(result[3].domain, "c", "fourth domain");
+
+    t.end();
+});
+
 test("rfc5322 parser", function (t) {
     var fxn, result;
     fxn = addrs;
