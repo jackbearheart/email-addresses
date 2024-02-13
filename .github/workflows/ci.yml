@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+env:
+  CI: true
+
+jobs:
+  test:
+    needs: [get-lts]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: 
+          - ${{ fromJson(needs.get-lts.outputs.active) }}
+          # - 12
+          # - 14
+          - 16
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        name: Node ${{ matrix.node-version }} on ${{ matrix.os }}
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm test
+
+  get-lts:
+    runs-on: ubuntu-latest
+    steps:
+      - id: get
+        uses: msimerson/node-lts-versions@v1
+    outputs:
+      lts: ${{ steps.get.outputs.lts }}
+      active: ${{ steps.get.outputs.active }}

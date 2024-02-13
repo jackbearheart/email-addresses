@@ -19,12 +19,16 @@
   },
   "main": "./lib/email-addresses.js",
   "devDependencies": {
-    "libxmljs": "~0.19.7",
-    "tap": "^14.8.2"
+    "libxmljs": "~1.0.11",
+    "tap": "^18.7.0"
   },
   "scripts": {
-    "test": "tap ./test"
+    "test": "npx tap ./test",
+    "versions": "npx dependency-version-checker check"
   },
   "license": "MIT",
-  "typings": "./lib/email-addresses.d.ts"
+  "typings": "./lib/email-addresses.d.ts",
+  "tap": {
+    "allow-incomplete-coverage": true
+  }
 }
