@@ -4,7 +4,7 @@ var fs = require("fs"),
 
 var addrs = require("../lib/email-addresses");
 
-var TESTS_FILE = "tests.xml",
+var TESTS_FILE = "./test/tests.xml",
     TESTS_FILE_ENCODING = "utf8";
 
 var ISEMAIL_ERR = "ISEMAIL_ERR",
@@ -29,7 +29,7 @@ function isEmailTest(t, data) {
             expectedToBeValid = shouldParse(diagnosis);
 
         t.equal(isValid, expectedToBeValid,
-            "[test " + id + "] address: " + address + ", expects: " + expectedToBeValid);
+            `[test ${id}] address: ${address}, expects: ${expectedToBeValid}`);
     });
     t.end();
 }
@@ -64,7 +64,7 @@ function getChildValue(parent, nodeName) {
 }
 
 function getAttr(node, attrName) {
-    return node.attr(attrName).value();
+    return node.getAttribute(attrName).value();
 }
 
 function getNodes(xml, xpath) {
