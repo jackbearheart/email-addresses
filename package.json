@@ -1,5 +1,5 @@
 {
-  "version": "5.0.0",
+  "version": "5.0.1",
   "name": "email-addresses",
   "description": "An email address parser based on rfc5322",
   "keywords": [
@@ -18,6 +18,7 @@
     "lib": "./lib"
   },
   "main": "./lib/email-addresses.js",
+  "files": ["bower.json", "Changes.md", "lib"],
   "devDependencies": {
     "libxmljs": "~1.0.11",
     "tap": "^18.7.0"
