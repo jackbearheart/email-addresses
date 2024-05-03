@@ -21,7 +21,6 @@
   "files": ["bower.json", "Changes.md", "lib"],
   "devDependencies": {
     "libxmljs": "~1.0.11",
-    "node-gyp": "^10.1.0",
     "tap": "^18.7.0"
   },
   "scripts": {

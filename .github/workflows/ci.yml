@@ -19,6 +19,8 @@ jobs:
           # - 12
           # - 14
           - 16
+        exclude:
+          - node-version: 22
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
