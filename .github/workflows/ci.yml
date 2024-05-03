@@ -21,6 +21,8 @@ jobs:
           - 16
         exclude:
           - node-version: 22
+          - os: macos-latest
+            node-version: 16
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
