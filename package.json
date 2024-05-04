@@ -19,16 +19,11 @@
   },
   "main": "./lib/email-addresses.js",
   "files": ["bower.json", "Changes.md", "lib"],
-  "devDependencies": {
-    "tap": "^18.7.0"
-  },
+  "devDependencies": { },
   "scripts": {
-    "test": "npx tap ./test",
-    "versions": "npx dependency-version-checker check"
+    "test": "node --test",
+    "cover": "npx -y c8 npm test"
   },
   "license": "MIT",
-  "typings": "./lib/email-addresses.d.ts",
-  "tap": {
-    "allow-incomplete-coverage": true
-  }
+  "typings": "./lib/email-addresses.d.ts"
 }
