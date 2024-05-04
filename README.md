@@ -11,16 +11,14 @@ Want to see if something could be an email address? Want to grab the display nam
 
 This library does not validate email addresses - we can't really do that without sending an email. However, it attempts to parse addresses using the (fairly liberal) grammar specified in RFC 5322. You can use this to check if user input looks like an email address.
 
-Note carefully though - this parser supports all features of RFC 5322, which means that `"Bob Example" <bob@example.com>`
-is a valid email address. If you just want to validate the `bob@example.com` part, that is RFC 5321, for which you want
-to use something like node-address-rfc2821.
+Note carefully though - this parser supports all features of RFC 5322, which means that `"Bob Example" <bob@example.com>` is a valid email address. If you just want to validate the `bob@example.com` part, that is RFC 5321, for which you want to use something like [node-address-rfc2821][url-rfc2821].
 
 Why use this?
 -------------
 Use this library because you can be sure it really respects the RFC:
  - The functions in the recursive decent parser match up with the productions in the RFC
  - The productions from the RFC are written above each function for easy verification
- - Tests include all of the test cases from the [is_email](https://github.com/dominicsayers/isemail) project, which are extensive
+ - Tests include all of the test cases from the [is_email][url-isemail] project, which are extensive
 
 Installation
 ------------
@@ -29,7 +27,7 @@ npm install email-addresses
 Example
 -------
 
-```
+```js
 $ node
 > addrs = require("email-addresses")
 { [Function: parse5322]
@@ -176,7 +174,7 @@ If you want to simply check whether an address or address list parses, you'll wa
 
 If you want to examine the parsed address, for example to extract a name or address, you have some options. The object returned by ```parseOneAddress``` has four helper values on it: ```name```, ```address```, ```local```, and ```domain```. See the example above to understand is actually returned. (These are equivalent to ```parts.name.semantic```, ```parts.address.semantic```, etc.) These values try to be smart about collapsing whitespace, quotations, and excluding RFC 5322 comments. If you desire, you can also obtain the raw parsed tokens or semantic tokens for those fields. The ```parts``` value is an object referencing nodes in the AST generated. Nodes in the AST have two values of interest here, ```tokens``` and ```semantic```.
 
-```
+```js
 > a = addrs.parseOneAddress('Jack  Bowman  <jack@fogcreek.com >')
 > a.parts.name.tokens
 'Jack  Bowman  '
@@ -204,8 +202,11 @@ References
 Props
 -----
 Many thanks to [Dominic Sayers](https://github.com/dominicsayers) and his documentation and tests
-for the [is_email](https://github.com/dominicsayers/isemail) function which helped greatly in writing this parser.
+for [is_email][url-isemail] which helped greatly in writing this parser.
 
 License
 -------
 Licensed under the MIT License. See the LICENSE file.
+
+[url-isemail]: https://github.com/dominicsayers/isemail
+[url-rfc2821]: https://www.npmjs.com/package/address-rfc2821
