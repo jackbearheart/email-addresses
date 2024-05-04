@@ -1,41 +1,33 @@
-var fs = require("fs"),
-    libxmljs = require("libxmljs"),
-    test = require("tap").test;
+const fs = require("fs")
+const test = require("tap").test
 
-var addrs = require("../lib/email-addresses");
+const addrs = require("../lib/email-addresses");
 
-var TESTS_FILE = "./test/tests.xml",
-    TESTS_FILE_ENCODING = "utf8";
+const TESTS_FILE = "./test/tests.json"
 
-var ISEMAIL_ERR = "ISEMAIL_ERR",
-    ISEMAIL_ERR_DOMAINHYPHENSTART = "ISEMAIL_ERR_DOMAINHYPHENSTART",
-    ISEMAIL_ERR_DOMAINHYPHENEND = "ISEMAIL_ERR_DOMAINHYPHENEND";
+const ISEMAIL_ERR = "ISEMAIL_ERR"
+const ISEMAIL_ERR_DOMAINHYPHENSTART = "ISEMAIL_ERR_DOMAINHYPHENSTART"
+const ISEMAIL_ERR_DOMAINHYPHENEND = "ISEMAIL_ERR_DOMAINHYPHENEND"
 
+test("isemail tests", function (t) {
 
-function isEmailTest(t, data) {
-    var nodes = getNodes(data, "//test");
-    nodes.forEach(function (node) {
-        var id = getAttr(node, "id"),
-            address = getChildValue(node, "address"),
-            diagnosis = getChildValue(node, "diagnosis");
+    for (const c of require('./tests.json')) {
 
-        var result = addrs(convertAddress(address)),
-            ast = null;
-        if (result !== null) {
-            ast = result.addresses[0].node;
-        }
+        const result = addrs(convertAddress(c.address))
+        let ast = result !== null ? result.addresses[0].node : null
 
-        var isValid = ast !== null,
-            expectedToBeValid = shouldParse(diagnosis);
+        var isValid = ast !== null
+        const expectedToBeValid = shouldParse(c.diagnosis)
 
-        t.equal(isValid, expectedToBeValid,
-            `[test ${id}] address: ${address}, expects: ${expectedToBeValid}`);
-    });
+        const msg = `[test ${c.id}] address: ${c.address}, expects: ${expectedToBeValid}`
+        t.equal(isValid, expectedToBeValid, msg);
+    }
+
     t.end();
-}
+})
 
 function shouldParse(diagnosis) {
-    var isOk = !startsWith(diagnosis, ISEMAIL_ERR) ||
+    const isOk = !startsWith(diagnosis, ISEMAIL_ERR) ||
         // is_email considers address with a domain beginning
         // or ending with "-" to be incorrect because they are not
         // valid domains, but we are only concerned with rfc5322.
@@ -59,29 +51,6 @@ function convertAddress(s) {
     return chars.join('');
 }
 
-function getChildValue(parent, nodeName) {
-    return parent.find(nodeName)[0].text();
-}
-
-function getAttr(node, attrName) {
-    return node.getAttribute(attrName).value();
-}
-
-function getNodes(xml, xpath) {
-    var doc = libxmljs.parseXml(xml);
-    return doc.find(xpath);
-}
-
 function startsWith(s, t) {
     return s.substring(0, t.length) === t;
 }
-
-test("isemail tests", function (t) {
-    fs.readFile(TESTS_FILE, TESTS_FILE_ENCODING, function (err, data) {
-        if (err) {
-            t.end();
-            return console.error(err);
-        }
-        isEmailTest(t, data);
-    });
-});

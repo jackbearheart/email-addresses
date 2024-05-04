@@ -14,15 +14,13 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: 
-          - ${{ fromJson(needs.get-lts.outputs.active) }}
-          # - 12
-          # - 14
+        node-version:
           - 16
-        exclude:
-          - node-version: 22
-          - os: macos-latest
-            node-version: 16
+          - ${{ fromJson(needs.get-lts.outputs.active) }}
+        # exclude:
+          # - node-version: 22
+          # - os: macos-latest
+          #   node-version: 14
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
