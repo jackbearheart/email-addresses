@@ -1,5 +1,5 @@
 
-const assert =require('node:assert')
+const assert = require('node:assert')
 const test = require('node:test')
 
 const addrs = require("../lib/email-addresses");
