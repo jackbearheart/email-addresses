@@ -1,6 +1,7 @@
 
 ## 2024-04-29 - 5.0.1
 
+- test: replace tests.xml with tests.json (#72)
 - chore: exclude tests and dotfiles from publishing (#70)
 
 ## 2021-08-17 - 5.0.0

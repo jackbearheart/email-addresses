@@ -20,7 +20,6 @@
   "main": "./lib/email-addresses.js",
   "files": ["bower.json", "Changes.md", "lib"],
   "devDependencies": {
-    "libxmljs": "~1.0.11",
     "tap": "^18.7.0"
   },
   "scripts": {
