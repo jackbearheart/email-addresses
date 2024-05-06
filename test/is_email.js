@@ -1,5 +1,6 @@
-const fs = require("fs")
-const test = require("tap").test
+const assert = require('node:assert')
+const fs = require('fs')
+const test = require('node:test')
 
 const addrs = require("../lib/email-addresses");
 
@@ -9,21 +10,20 @@ const ISEMAIL_ERR = "ISEMAIL_ERR"
 const ISEMAIL_ERR_DOMAINHYPHENSTART = "ISEMAIL_ERR_DOMAINHYPHENSTART"
 const ISEMAIL_ERR_DOMAINHYPHENEND = "ISEMAIL_ERR_DOMAINHYPHENEND"
 
-test("isemail tests", function (t) {
+test('isemail tests', async function (t) {
 
     for (const c of require('./tests.json')) {
+        await t.test(c.address, (t) => {
+            const result = addrs(convertAddress(c.address))
+            let ast = result !== null ? result.addresses[0].node : null
 
-        const result = addrs(convertAddress(c.address))
-        let ast = result !== null ? result.addresses[0].node : null
+            var isValid = ast !== null
+            const expectedToBeValid = shouldParse(c.diagnosis)
 
-        var isValid = ast !== null
-        const expectedToBeValid = shouldParse(c.diagnosis)
-
-        const msg = `[test ${c.id}] address: ${c.address}, expects: ${expectedToBeValid}`
-        t.equal(isValid, expectedToBeValid, msg);
+            const msg = `[test ${c.id}] address: ${c.address}, expects: ${expectedToBeValid}`
+            assert.equal(isValid, expectedToBeValid, msg);
+        })
     }
-
-    t.end();
 })
 
 function shouldParse(diagnosis) {
