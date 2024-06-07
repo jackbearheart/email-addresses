@@ -173,6 +173,11 @@ test("display-name semantic interpretation", function (t) {
         "surrounding quotes are not semantic");
 
     check(
+        "First \"Middle\" Last <foo@bar.com>",
+        "surrounding quotes should not run words together",
+        "First Middle Last");
+
+    check(
         " \t \"First   Last\" <foo@bar.com>",
         "surrounding quotes are not semantic and whitespace is collapsed");
 
