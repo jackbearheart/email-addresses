@@ -60,6 +60,8 @@ declare module emailAddresses {
         strict?: boolean;
         atInDisplayName?: boolean;
         commaInDisplayName?: boolean;
+        squareBracketsInDisplayName?: boolean;
+        colonInDisplayName?: boolean;
         addressListSeparator?: string;
     }
 

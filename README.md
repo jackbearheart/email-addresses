@@ -101,6 +101,8 @@ Options:
   * `startAt` - Start the parser at one of `address`, `address-list`, `angle-addr`, `from`, `group`, `mailbox`, `mailbox-list`, `reply-to`, `sender`. Default: `address-list`.
   * `atInDisplayName` - Allow the `@` character in the display name of the email address. Default: `false`.
   * `commaInDisplayName` - Allow the `,` character in the display name of the email address. Default: `false`.
+  * `squareBracketsInDisplayName` - Allow the `[` and ']' characters in the display name of the email address. Default: `false`.
+  * `colonInDisplayName` - Allow the `:` character in the display name of the email address. Default: `false`.
   * `addressListSeparator` - Specifies the character separating the list of email addresses. Default: `,`.
 
 Returns an object with the following properties:
